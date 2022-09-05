@@ -1,13 +1,16 @@
 {
-  "name": "@search-ngo/monorepo",
+  "name": "@collaborate/monorepo",
+  "keywords": [],
+  "license": "MIT",
+  "author": "Lucas Rinaldi <lucashrinaldi@gmail.com>",
+  "scripts": {
+    "sort": "npx sort-package-json ./package.json apps/**/package.json"
+  },
+  "devDependencies": {
+    "prettier": "2.7.1"
+  },
   "engines": {
     "node": ">=18",
     "pnpm": ">=7"
-  },
-  "keywords": [],
-  "author": "Lucas Rinaldi <lucashrinaldi@gmail.com>",
-  "license": "MIT",
-  "devDependencies": {
-    "prettier": "2.7.1"
   }
 }
