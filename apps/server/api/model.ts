@@ -1,18 +1,21 @@
-import Objection, { compose, Model, snakeCaseMappers } from "objection";
-import objectionGuid from "objection-guid";
+import Objection, { Model, snakeCaseMappers } from "objection";
+import { v4 as uuidv4 } from "uuid";
+import { z } from "zod";
 import { ZodValidator } from "../utils/zod-validator";
 
-const enhanced = compose(objectionGuid());
-
-export class BaseModel extends enhanced(Model) {
+export class BaseModel extends Model {
   static columnNameMappers = snakeCaseMappers();
-
-  static schema() {
-    throw new Error("schema not implemented");
-  }
 
   static createValidator() {
     return new ZodValidator();
+  }
+
+  static validationSchema() {
+    return z.object({
+      id: z.string().optional(),
+      createdAt: z.string().optional(),
+      updatedAt: z.string().optional(),
+    });
   }
 
   id!: string;
@@ -22,6 +25,7 @@ export class BaseModel extends enhanced(Model) {
   async $beforeInsert(queryContext: Objection.QueryContext) {
     await super.$beforeInsert(queryContext);
 
+    this.id = this.id || uuidv4();
     this.createdAt = new Date().toISOString();
   }
 
