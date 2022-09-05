@@ -6,9 +6,10 @@
   "scripts": {
     "dev": "nodemon index.ts",
     "lint": "eslint --ignore-path ../../.gitignore .",
-    "build": "tsc -p tsconfig.json",
+    "build": "pnpm clean && tsc -p tsconfig.json",
     "start": "node build/index.js",
-    "knex": "knex --knexfile ./services/knex/knexfile.ts"
+    "knex": "knex --knexfile ./services/knex/knexfile.ts",
+    "clean": "rm -rf build"
   },
   "keywords": [],
   "author": "",

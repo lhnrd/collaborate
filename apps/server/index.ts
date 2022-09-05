@@ -21,6 +21,11 @@ async function start() {
     },
   });
 
+  fastify.get("/hello", () => {
+    console.log("helo");
+    return "world";
+  });
+
   await fastify.register(fastifyService());
   await fastify.register(knexService());
   await fastify.register(trpcService(baseRouter));

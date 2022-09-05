@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "typeRoots": ["./@types", "./node_modules/@types"],
     "target": "es2017",
     "module": "commonjs",
@@ -12,6 +13,13 @@
     "noUnusedParameters": true,
     "allowJs": true
   },
+  "files": ["./index.ts"],
   "include": ["./**/*"],
-  "exclude": ["./node_modules", "./build"]
+  "exclude": [
+    "./node_modules",
+    "./build",
+    "./services/knex/factories",
+    "./services/knex/migrations",
+    "./services/knex/seeds"
+  ]
 }
