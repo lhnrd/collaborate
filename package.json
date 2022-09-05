@@ -1,0 +1,13 @@
+{
+  "name": "@search-ngo/monorepo",
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=7"
+  },
+  "keywords": [],
+  "author": "Lucas Rinaldi <lucashrinaldi@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "2.7.1"
+  }
+}
