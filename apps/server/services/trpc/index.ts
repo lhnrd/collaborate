@@ -14,12 +14,26 @@ export function trpcService(baseRouter: AnyRouter) {
   });
 }
 
-export function createContext({ req, res }: CreateFastifyContextOptions) {
-  const user = { name: req.headers.username ?? "anonymous" };
-  return { req, res, user };
+type CreateContextOptions = Record<string, unknown>;
+
+/**
+ * Inner function for `createContext` where we create the context.
+ * This is useful for testing when we don't want to mock Next.js' request/response
+ */
+export function createContextInner(_opts?: CreateContextOptions) {
+  return {};
 }
 
-export type Context = inferAsyncReturnType<typeof createContext>;
+/**
+ * Creates context for an incoming request
+ * @link https://trpc.io/docs/context
+ */
+export function createContext({ req, res }: CreateFastifyContextOptions) {
+  const ctx = createContextInner();
+  return { ...ctx, req, res };
+}
+
+export type Context = inferAsyncReturnType<typeof createContextInner>;
 
 export function createRouter() {
   return router<Context>();
