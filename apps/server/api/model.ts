@@ -1,20 +1,15 @@
+import { Type } from "@sinclair/typebox";
 import Objection, { Model, snakeCaseMappers } from "objection";
 import { v4 as uuidv4 } from "uuid";
-import { z } from "zod";
-import { ZodValidator } from "../utils/zod-validator";
 
 export class BaseModel extends Model {
   static columnNameMappers = snakeCaseMappers();
 
-  static createValidator() {
-    return new ZodValidator();
-  }
-
-  static validationSchema() {
-    return z.object({
-      id: z.string().optional(),
-      createdAt: z.string().optional(),
-      updatedAt: z.string().optional(),
+  static get jsonSchema() {
+    return Type.Object({
+      id: Type.Optional(Type.String()),
+      createdAt: Type.Optional(Type.String()),
+      updatedAt: Type.Optional(Type.String()),
     });
   }
 
