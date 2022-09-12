@@ -131,6 +131,6 @@ dist
 .pnp.*
 
 # SQLite DB
-database.sqlite3
+*.sqlite
 
 NOTES.md

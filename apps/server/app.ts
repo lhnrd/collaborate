@@ -2,6 +2,7 @@ import sensible from "@fastify/sensible";
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import Fastify from "fastify";
 import { baseRoutes } from "./api/routes";
+import { configService } from "./services/config";
 import { knexService } from "./services/knex";
 import { swaggerService } from "./services/swagger";
 
@@ -15,6 +16,7 @@ export async function app(options?: FastifyOptions) {
   await fastify.register(swaggerService);
 
   // Custom Plugins
+  await fastify.register(configService);
   await fastify.register(knexService);
   await fastify.register(baseRoutes, { prefix: "/api" });
 

@@ -1,21 +1,21 @@
 import { app } from "./app";
-import { env, host, port } from "./config";
 
 async function start() {
   const server = await app({
     logger: {
-      transport:
-        env === "development"
-          ? {
-              target: "pino-pretty",
-              options: {
-                translateTime: "HH:MM:ss Z",
-                ignore: "pid,hostname",
-              },
-            }
-          : undefined,
+      transport: {
+        target: "pino-pretty",
+        options: {
+          translateTime: "HH:MM:ss Z",
+          ignore: "pid,hostname",
+        },
+      },
     },
   });
+
+  const { host, port } = server.config;
+
+  console.log(server.config);
 
   try {
     await server.listen({ port: Number(port), host });
@@ -27,11 +27,4 @@ async function start() {
   return server;
 }
 
-start().then(
-  () => {
-    console.log("started");
-  },
-  (...args) => {
-    console.log("failed", ...args);
-  }
-);
+void start();
