@@ -1,8 +1,9 @@
-import { z } from "zod";
+import "objection";
 
 declare module "objection" {
   // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   interface ModelClass {
-    static validationSchema(): z.Schema;
+    outputSchema: JSONSchema;
+    inputSchema: JSONSchema;
   }
 }

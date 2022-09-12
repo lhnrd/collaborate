@@ -1,13 +1,16 @@
-import { z } from "zod";
+import { Type } from "@sinclair/typebox";
 import { BaseModel } from "../model";
 
 export class OrganizationModel extends BaseModel {
   static tableName = "organizations";
 
-  static validationSchema() {
-    return super.validationSchema().extend({
-      name: z.string(),
-    });
+  static get jsonSchema() {
+    return Type.Intersect([
+      super.jsonSchema,
+      Type.Object({
+        name: Type.String(),
+      }),
+    ]);
   }
 
   name!: string;

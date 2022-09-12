@@ -1,14 +1,29 @@
+import "fastify";
 import fp from "fastify-plugin";
-import Knex from "knex";
+import Knex, { Knex as KnexType } from "knex";
+import { Model } from "objection";
 import knexfile from "./knexfile";
 
-type NodeEnv = "production" | "development" | "test";
-
-export function knexService() {
-  return fp(async (fastify, _opts) => {
-    const env = (process.env.NODE_ENV ?? "development") as NodeEnv;
-    const knex = Knex(knexfile[env]);
-
-    fastify.decorate("knex", knex);
-  });
+declare module "fastify" {
+  /* eslint-disable @typescript-eslint/consistent-type-definitions */
+  /* Declaration mergin has to be with an interface  */
+  interface FastifyInstance {
+    knex: KnexType;
+  }
+  /* eslint-enable @typescript-eslint/consistent-type-definitions */
 }
+
+export const knexService = fp(async (fastify) => {
+  const { env } = fastify.config;
+  const knex = Knex(knexfile[env]);
+
+  Model.knex(knex);
+
+  fastify.decorate("knex", knex);
+
+  fastify.addHook("onClose", (fastify, done) => {
+    if (fastify.knex === knex) {
+      fastify.knex.destroy(done);
+    }
+  });
+});

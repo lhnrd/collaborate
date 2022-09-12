@@ -1,50 +1,30 @@
-import Fastify from "fastify";
-import { baseRouter } from "./api/router";
-import { env, host, port } from "./config";
-import { fastifyService } from "./services/fastify";
-import { knexService } from "./services/knex";
-import { trpcService } from "./services/trpc";
+import { app } from "./app";
 
 async function start() {
-  const fastify = Fastify({
+  const server = await app({
     logger: {
-      transport:
-        env === "development"
-          ? {
-              target: "pino-pretty",
-              options: {
-                translateTime: "HH:MM:ss Z",
-                ignore: "pid,hostname",
-              },
-            }
-          : undefined,
+      transport: {
+        target: "pino-pretty",
+        options: {
+          translateTime: "HH:MM:ss Z",
+          ignore: "pid,hostname",
+        },
+      },
     },
   });
 
-  fastify.get("/hello", () => {
-    console.log("helo");
-    return "world";
-  });
+  const { host, port } = server.config;
 
-  await fastify.register(fastifyService());
-  await fastify.register(knexService());
-  await fastify.register(trpcService(baseRouter));
+  console.log(server.config);
 
   try {
-    await fastify.listen({ port: Number(port), host });
+    await server.listen({ port: Number(port), host });
   } catch (error: unknown) {
-    fastify.log.error(error);
+    server.log.error(error);
     process.exit(1);
   }
 
-  return fastify;
+  return server;
 }
 
-start().then(
-  () => {
-    console.log("started");
-  },
-  (...args) => {
-    console.log("failed", ...args);
-  }
-);
+void start();
