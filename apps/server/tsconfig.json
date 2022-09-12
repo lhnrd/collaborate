@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "typeRoots": ["./@types", "./node_modules/@types"],
+    "typeRoots": ["./node_modules/@types", "./@types"],
     "target": "es2017",
     "module": "commonjs",
     "esModuleInterop": true,

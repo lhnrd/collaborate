@@ -1,12 +1,8 @@
-import Fastify from "fastify";
-import { baseRouter } from "./api/router";
+import { app } from "./app";
 import { env, host, port } from "./config";
-import { fastifyService } from "./services/fastify";
-import { knexService } from "./services/knex";
-import { trpcService } from "./services/trpc";
 
 async function start() {
-  const fastify = Fastify({
+  const server = await app({
     logger: {
       transport:
         env === "development"
@@ -21,23 +17,14 @@ async function start() {
     },
   });
 
-  fastify.get("/hello", () => {
-    console.log("helo");
-    return "world";
-  });
-
-  await fastify.register(fastifyService());
-  await fastify.register(knexService());
-  await fastify.register(trpcService(baseRouter));
-
   try {
-    await fastify.listen({ port: Number(port), host });
+    await server.listen({ port: Number(port), host });
   } catch (error: unknown) {
-    fastify.log.error(error);
+    server.log.error(error);
     process.exit(1);
   }
 
-  return fastify;
+  return server;
 }
 
 start().then(
