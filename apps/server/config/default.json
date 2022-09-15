@@ -1,0 +1,13 @@
+{
+  "serviceName": "@collaborate/server",
+  "environment": "development",
+
+  "HTTPServer": {
+    "host": "127.0.0.1",
+    "port": 8080
+  },
+
+  "Database": {
+    "connectionString": "postgres"
+  }
+}
