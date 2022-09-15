@@ -5,6 +5,7 @@
     "./build",
     "./services/knex/factories",
     "./services/knex/migrations",
-    "./services/knex/seeds"
+    "./services/knex/seeds",
+    "./**/*.test.*"
   ]
 }

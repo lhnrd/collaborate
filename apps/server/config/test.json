@@ -1,0 +1,7 @@
+{
+  "environment": "test",
+
+  "Database": {
+    "name": "collaboratedb_test"
+  }
+}

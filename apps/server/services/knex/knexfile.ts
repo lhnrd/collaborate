@@ -1,14 +1,15 @@
-import dotenv from "dotenv";
+import config from "config";
+import { Knex } from "knex";
 import path from "path";
 
-dotenv.config();
-
-const database = process.env.SQLITE_FILENAME ?? "db";
-
-const config = {
-  client: "sqlite3",
+const cfg: Knex.Config = {
+  client: "pg",
   connection: {
-    filename: path.join(__dirname, `./${database}.sqlite`),
+    host: config.get("Database.host"),
+    port: config.get("Database.port"),
+    user: config.get("Database.user"),
+    password: config.get("Database.password") ?? undefined,
+    database: config.get("Database.name"),
   },
   migrations: {
     directory: path.join(__dirname, "./migrations"),
@@ -23,7 +24,7 @@ const config = {
 };
 
 export default {
-  development: config,
-  test: config,
-  production: config,
+  development: cfg,
+  test: cfg,
+  production: cfg,
 };
