@@ -13,12 +13,10 @@ async function start() {
     },
   });
 
-  const { host, port } = server.config;
-
-  console.log(server.config);
+  const { host, port } = server.config.get("HTTPServer");
 
   try {
-    await server.listen({ port: Number(port), host });
+    await server.listen({ port, host });
   } catch (error: unknown) {
     server.log.error(error);
     process.exit(1);

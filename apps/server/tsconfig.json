@@ -1,17 +1,22 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "typeRoots": ["./node_modules/@types", "./@types"],
+    "typeRoots": ["./@types", "./node_modules/@types"],
     "target": "es2017",
     "module": "commonjs",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "strictNullChecks": true,
     "skipLibCheck": true,
     "outDir": "build",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "allowJs": true
+    "allowJs": true,
+    "resolveJsonModule": true
+  },
+  "ts-node": {
+    "files": true
   },
   "files": ["./index.ts"],
   "include": ["./**/*"],

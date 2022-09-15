@@ -13,8 +13,10 @@ declare module "fastify" {
   /* eslint-enable @typescript-eslint/consistent-type-definitions */
 }
 
+type NodeEnv = "development" | "production" | "test";
+
 export const knexService = fp(async (fastify) => {
-  const { env } = fastify.config;
+  const env: NodeEnv = fastify.config.get("environment");
   const knex = Knex(knexfile[env]);
 
   Model.knex(knex);
