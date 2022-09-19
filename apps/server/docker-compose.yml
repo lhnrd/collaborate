@@ -1,0 +1,23 @@
+services:
+  collaborate-database-dev:
+    container_name: collaborate-database-dev
+    image: postgres:14.5
+    ports:
+      - 4100:5432
+    environment:
+      - POSTGRES_HOST=127.0.0.1
+      - POSTGRES_PORT=4100
+      - POSTGRES_DB=collaboratedb_dev
+      - POSTGRES_USER=collaborate
+      - POSTGRES_PASSWORD=password
+  collaborate-database-test:
+    container_name: collaborate-database-test
+    image: postgres:14.5
+    ports:
+      - 4150:5432
+    environment:
+      - POSTGRES_HOST=127.0.0.1
+      - POSTGRES_PORT=4150
+      - POSTGRES_DB=collaboratedb_test
+      - POSTGRES_USER=collaborate
+      - POSTGRES_PASSWORD=password

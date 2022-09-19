@@ -4,14 +4,14 @@
 
   "HTTPServer": {
     "host": "127.0.0.1",
-    "port": 8080
+    "port": 4000
   },
 
   "Database": {
     "host": "127.0.0.1",
-    "port": 5432,
-    "user": "lhrinaldi",
-    "password": null,
+    "port": 4100,
+    "user": "collaborate",
+    "password": "password",
     "name": "collaboratedb_dev"
   }
 }

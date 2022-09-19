@@ -8,7 +8,7 @@ const cfg: Knex.Config = {
     host: config.get("Database.host"),
     port: config.get("Database.port"),
     user: config.get("Database.user"),
-    password: config.get("Database.password") ?? undefined,
+    password: config.get("Database.password"),
     database: config.get("Database.name"),
   },
   migrations: {
@@ -20,7 +20,7 @@ const cfg: Knex.Config = {
     extension: "ts",
   },
   useNullAsDefault: true,
-  debug: true,
+  debug: false,
 };
 
 export default {
