@@ -11,6 +11,7 @@ module.exports = {
       rules: {
         "new-cap": "off",
         "@typescript-eslint/naming-convention": "off",
+        "@typescript-eslint/ban-types": "off",
       },
     },
   ],
