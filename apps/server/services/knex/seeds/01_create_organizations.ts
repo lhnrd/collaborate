@@ -7,5 +7,5 @@ export async function seed(knex: Knex): Promise<void> {
 
   await knex("organizations").del();
 
-  await organizationFactory.create();
+  await organizationFactory.createList(10);
 }

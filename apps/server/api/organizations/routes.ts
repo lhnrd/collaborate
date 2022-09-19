@@ -26,9 +26,9 @@ export const organizationsRoutes: FastifyPluginAsyncTypebox = async (
         },
       },
     },
-    async (_, _a) => {
+    async (_, reply) => {
       const orgs = await OrganizationModel.query().select();
-      return orgs;
+      return reply.send(orgs);
     }
   );
 };

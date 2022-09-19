@@ -39,7 +39,9 @@ export class BaseModel extends Model {
       {
         id: Type.Optional(Type.String({ format: "uuid" })),
         createdAt: Type.Optional(Type.String({ format: "date-time" })),
-        updatedAt: Type.Optional(Type.String({ format: "date-time" })),
+        updatedAt: Type.Optional(
+          Type.Union([Type.String({ format: "date-time" }), Type.Null()])
+        ),
       },
       { $id: "BaseInput" }
     );
@@ -68,6 +70,7 @@ export class BaseModel extends Model {
 
     this.id = this.id || uuidv4();
     this.createdAt = new Date().toISOString();
+    this.updatedAt = null;
   }
 
   async $beforeUpdate(
