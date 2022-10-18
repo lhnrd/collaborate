@@ -35,40 +35,73 @@ export class BaseModel extends Model {
   }
 
   static get jsonSchema() {
-    return Type.Object(
-      {
-        id: Type.Optional(Type.String({ format: "uuid" })),
+    return Type.Object({
+      id: Type.Optional(Type.String({ format: "uuid" })),
+    });
+  }
+
+  static get outputSchema() {
+    return Type.Object({
+      id: Type.String({ format: "uuid" }),
+    });
+  }
+
+  id!: string;
+
+  async $beforeInsert(queryContext: Objection.QueryContext) {
+    await super.$beforeInsert(queryContext);
+
+    this.id = this.id || uuidv4();
+  }
+
+  $parseDatabaseJson(json: Objection.Pojo): Objection.Pojo {
+    json = super.$parseDatabaseJson(json);
+
+    // Postgres node library converts timestamps to Date objects automatically
+    return Object.entries(json).reduce((acc, [key, value]) => {
+      if (value instanceof Date) {
+        Reflect.set(acc, key, value.toISOString());
+        return acc;
+      }
+
+      Reflect.set(acc, key, value);
+      return acc;
+    }, {});
+  }
+}
+
+export class TimestampedModel extends BaseModel {
+  static get jsonSchema() {
+    return Type.Intersect([
+      super.jsonSchema,
+      Type.Object({
         createdAt: Type.Optional(Type.String({ format: "date-time" })),
         updatedAt: Type.Optional(
           Type.Union([Type.String({ format: "date-time" }), Type.Null()])
         ),
-      },
-      { $id: "BaseInput" }
-    );
+      }),
+    ]);
   }
 
   static get outputSchema() {
-    return Type.Object(
-      {
-        id: Type.String({ format: "uuid" }),
+    return Type.Intersect([
+      super.outputSchema,
+      Type.Object({
         createdAt: Type.String({ format: "date-time" }),
         updatedAt: Type.Union([
           Type.String({ format: "date-time" }),
           Type.Null(),
         ]),
-      },
-      { $id: "BaseModel" }
-    );
+      }),
+    ]);
   }
 
-  id!: string;
   createdAt!: string;
   updatedAt!: string | null;
 
   async $beforeInsert(queryContext: Objection.QueryContext) {
     await super.$beforeInsert(queryContext);
 
-    this.id = this.id || uuidv4();
     this.createdAt = new Date().toISOString();
     this.updatedAt = null;
   }
@@ -80,19 +113,5 @@ export class BaseModel extends Model {
     await super.$beforeUpdate(opt, queryContext);
 
     this.updatedAt = new Date().toISOString();
-  }
-
-  $parseDatabaseJson(json: Objection.Pojo): Objection.Pojo {
-    json = super.$parseDatabaseJson(json);
-
-    return Object.entries(json).reduce((acc, [key, value]) => {
-      if (value instanceof Date) {
-        Reflect.set(acc, key, value.toISOString());
-        return acc;
-      }
-
-      Reflect.set(acc, key, value);
-      return acc;
-    }, {});
   }
 }

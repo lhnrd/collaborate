@@ -7,18 +7,20 @@ import {
 } from "../contact-mechanisms/model";
 import { TimestampedModel } from "../model";
 
-export class OrganizationModel extends TimestampedModel {
-  static tableName = "organizations";
+export class UserModel extends TimestampedModel {
+  static tableName = "users";
 
   static get jsonSchema() {
     return Type.Intersect(
       [
         super.jsonSchema,
         Type.Object({
-          name: Type.String(),
+          email: Type.String(),
+          name: Type.Optional(Type.String()),
+          lastName: Type.Optional(Type.String()),
         }),
       ],
-      { $id: "OrganizationInput" }
+      { $id: "UserInput" }
     );
   }
 
@@ -27,10 +29,12 @@ export class OrganizationModel extends TimestampedModel {
       [
         super.outputSchema,
         Type.Object({
-          name: Type.String(),
+          email: Type.String(),
+          name: Type.Optional(Type.String()),
+          lastName: Type.Optional(Type.String()),
         }),
       ],
-      { $id: "OrganizationModel" }
+      { $id: "UserModel" }
     );
   }
 
@@ -39,9 +43,9 @@ export class OrganizationModel extends TimestampedModel {
       relation: Model.ManyToManyRelation,
       modelClass: AddressModel,
       join: {
-        from: "organizations.id",
+        from: "users.id",
         through: {
-          from: "contact_mechanisms.organization_id",
+          from: "contact_mechanisms.user_id",
           to: "contact_mechanisms.id",
         },
         to: "contact_mechanisms_addresses.contact_mechanism_id",
@@ -51,9 +55,9 @@ export class OrganizationModel extends TimestampedModel {
       relation: Model.ManyToManyRelation,
       modelClass: EmailModel,
       join: {
-        from: "organizations.id",
+        from: "users.id",
         through: {
-          from: "contact_mechanisms.organization_id",
+          from: "contact_mechanisms.user_id",
           to: "contact_mechanisms.id",
         },
         to: "contact_mechanisms_emails.contact_mechanism_id",
@@ -63,9 +67,9 @@ export class OrganizationModel extends TimestampedModel {
       relation: Model.ManyToManyRelation,
       modelClass: PhoneModel,
       join: {
-        from: "organizations.id",
+        from: "users.id",
         through: {
-          from: "contact_mechanisms.organization_id",
+          from: "contact_mechanisms.user_id",
           to: "contact_mechanisms.id",
         },
         to: "contact_mechanisms_phones.contact_mechanism_id",
@@ -73,7 +77,9 @@ export class OrganizationModel extends TimestampedModel {
     },
   };
 
-  name!: string;
+  email!: string;
+  name?: string;
+  lastName?: string;
 
   addresses?: AddressModel[];
   emails?: EmailModel[];

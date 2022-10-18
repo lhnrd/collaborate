@@ -10,6 +10,7 @@ importers:
 
   apps/server:
     specifiers:
+      '@brazilian-utils/brazilian-utils': 1.0.0-rc.12
       '@faker-js/faker': ^7.4.0
       '@fastify/cors': ^8.1.0
       '@fastify/sensible': ^5.1.1
@@ -45,6 +46,7 @@ importers:
       uuid: ^9.0.0
       vitest: ^0.23.2
     dependencies:
+      '@brazilian-utils/brazilian-utils': 1.0.0-rc.12
       '@fastify/cors': 8.1.0
       '@fastify/sensible': 5.1.1
       '@fastify/swagger': 7.5.1
@@ -82,6 +84,10 @@ importers:
       vitest: 0.23.2
 
 packages:
+
+  /@brazilian-utils/brazilian-utils/1.0.0-rc.12:
+    resolution: {integrity: sha512-gR5TbSKTgFgDe0/ZghgwqCEryLbHjwdEpvr3ao/Z0f8zRu6LD3lif0HJ3eQiC3pJSwtUPyA+97vm1IEqZkYSTA==}
+    dev: false
 
   /@cspotcode/source-map-support/0.8.1:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
