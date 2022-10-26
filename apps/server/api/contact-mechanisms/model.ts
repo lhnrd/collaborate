@@ -24,6 +24,7 @@ export class StateModel extends BaseModel {
 
   code!: string;
   name!: string;
+
   country!: CountryModel;
 }
 
@@ -42,6 +43,7 @@ export class CityModel extends BaseModel {
   };
 
   name!: string;
+
   state!: StateModel;
 }
 
@@ -58,12 +60,31 @@ export class AddressModel extends TimestampedModel {
       },
     },
   };
-}
 
-export class PhoneModel extends TimestampedModel {
-  static tableName = "contact_mechanisms_phones";
+  additionalInfo?: string;
+  complement?: string;
+  district?: string;
+  street?: string;
+  streetNumber?: string;
+  zipCode?: string;
+
+  city!: CityModel;
 }
 
 export class EmailModel extends TimestampedModel {
   static tableName = "contact_mechanisms_emails";
+
+  address?: string;
+}
+
+export class PhoneModel extends TimestampedModel {
+  static tableName = "contact_mechanisms_phones";
+
+  areaCode?: string;
+  countryCode?: string;
+  number?: string;
+}
+
+export class ContactMechanismModel extends BaseModel {
+  static tableName = "contact_mechanisms";
 }
