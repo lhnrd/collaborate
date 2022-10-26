@@ -2,6 +2,7 @@ import { Type } from "@sinclair/typebox";
 import { Model } from "objection";
 import {
   AddressModel,
+  ContactMechanismModel,
   EmailModel,
   PhoneModel,
 } from "../contact-mechanisms/model";
@@ -34,44 +35,49 @@ export class OrganizationModel extends TimestampedModel {
     );
   }
 
-  static relationMappings = {
-    addresses: {
-      relation: Model.ManyToManyRelation,
-      modelClass: AddressModel,
-      join: {
-        from: "organizations.id",
-        through: {
-          from: "contact_mechanisms.organization_id",
-          to: "contact_mechanisms.id",
+  static get relationMappings() {
+    return {
+      addresses: {
+        relation: Model.ManyToManyRelation,
+        modelClass: AddressModel,
+        join: {
+          from: "organizations.id",
+          through: {
+            modelClass: ContactMechanismModel,
+            from: "contact_mechanisms.organization_id",
+            to: "contact_mechanisms.contact_mechanism_address_id",
+          },
+          to: "contact_mechanisms_addresses.id",
         },
-        to: "contact_mechanisms_addresses.contact_mechanism_id",
       },
-    },
-    emails: {
-      relation: Model.ManyToManyRelation,
-      modelClass: EmailModel,
-      join: {
-        from: "organizations.id",
-        through: {
-          from: "contact_mechanisms.organization_id",
-          to: "contact_mechanisms.id",
+      emails: {
+        relation: Model.ManyToManyRelation,
+        modelClass: EmailModel,
+        join: {
+          from: "organizations.id",
+          through: {
+            modelClass: ContactMechanismModel,
+            from: "contact_mechanisms.organization_id",
+            to: "contact_mechanisms.contact_mechanism_email_id",
+          },
+          to: "contact_mechanisms_emails.id",
         },
-        to: "contact_mechanisms_emails.contact_mechanism_id",
       },
-    },
-    phones: {
-      relation: Model.ManyToManyRelation,
-      modelClass: PhoneModel,
-      join: {
-        from: "organizations.id",
-        through: {
-          from: "contact_mechanisms.organization_id",
-          to: "contact_mechanisms.id",
+      phones: {
+        relation: Model.ManyToManyRelation,
+        modelClass: PhoneModel,
+        join: {
+          from: "organizations.id",
+          through: {
+            modelClass: ContactMechanismModel,
+            from: "contact_mechanisms.organization_id",
+            to: "contact_mechanisms.contact_mechanism_phone_id",
+          },
+          to: "contact_mechanisms_phones.id",
         },
-        to: "contact_mechanisms_phones.contact_mechanism_id",
       },
-    },
-  };
+    };
+  }
 
   name!: string;
 

@@ -6,6 +6,10 @@ export async function seed(knex: Knex): Promise<void> {
   Model.knex(knex);
 
   await knex("organizations").del();
+  await knex("contact_mechanisms_addresses").del();
+  await knex("contact_mechanisms_phones").del();
+  await knex("contact_mechanisms_emails").del();
+  await knex("contact_mechanisms").del();
 
   await organizationFactory.createList(10);
 }
