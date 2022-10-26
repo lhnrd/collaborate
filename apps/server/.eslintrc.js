@@ -12,6 +12,7 @@ module.exports = {
         "new-cap": "off",
         "@typescript-eslint/naming-convention": "off",
         "@typescript-eslint/ban-types": "off",
+        "capitalized-comments": "off",
       },
     },
   ],
