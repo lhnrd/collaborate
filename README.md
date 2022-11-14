@@ -1,4 +1,4 @@
-# @collaborate
+# @collaborate/platform
 
 The collaborate project aims to house a collection of non-governamental
 organizations with all their info, and later with everything they are lacking
@@ -26,9 +26,9 @@ for learning, to help NGOs get more help and visibility, help private orgs
 to stand out for helping othes and users to find collaboration opportunities
 way more easily.
 
-The `collaborate` app itself will be a NGO inside the platform
+The `collaborate` app itself will be a pseudo-NGO inside the platform
 and will declare its hosting costs as a collaboration opportunity for users to
-help out keep the website alive.
+help keep the website alive.
 
 ## User Stories
 
