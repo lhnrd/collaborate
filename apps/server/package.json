@@ -14,6 +14,7 @@
     "predev": "docker compose up collaborate-database-dev -d && cross-env NODE_ENV=development pnpm knex migrate:latest",
     "dev": "nodemon index.ts --project tsconfig.json",
     "postdev": "docker compose stop collaborate-database-dev",
+    "dev:seed": "cross-env NODE_ENV=test pnpm knex seed:run",
     "knex": "NODE_CONFIG_DIR=../../config knex --knexfile ./services/knex/knexfile.ts",
     "lint": "eslint --ignore-path ../../.gitignore .",
     "prestart": "pnpm build",
@@ -21,7 +22,8 @@
     "pretest": "docker compose up collaborate-database-test -d && cross-env NODE_ENV=test pnpm knex migrate:latest",
     "test": "vitest",
     "posttest": "docker compose stop collaborate-database-test",
-    "types": "openapi-typescript http://127.0.0.1:8080/docs/json --output ./@types/generated.d.ts"
+    "test:seed": "cross-env NODE_ENV=test pnpm knex seed:run",
+    "types": "openapi-typescript http://127.0.0.1:8080/docs/json --output ./@types/api.d.ts"
   },
   "dependencies": {
     "@brazilian-utils/brazilian-utils": "1.0.0-rc.12",
