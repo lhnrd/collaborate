@@ -4,7 +4,7 @@
   "license": "MIT",
   "author": "Lucas Rinaldi <lucashrinaldi@gmail.com>",
   "scripts": {
-    "sort": "npx sort-package-json ./package.json apps/**/package.json"
+    "sort": "pnpm dlx sort-package-json ./package.json apps/**/package.json"
   },
   "devDependencies": {
     "prettier": "2.7.1"
